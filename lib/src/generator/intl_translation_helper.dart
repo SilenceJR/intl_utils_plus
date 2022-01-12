@@ -39,8 +39,8 @@ import '../intl_translation/extract_messages.dart';
 import '../intl_translation/generate_localized.dart';
 import '../intl_translation/src/icu_parser.dart';
 import '../intl_translation/src/intl_message.dart';
-
 import '../utils/utils.dart';
+import 'data_helper.dart';
 
 class IntlTranslationHelper {
   final pluralAndGenderParser = IcuParser().message;
@@ -88,6 +88,9 @@ class IntlTranslationHelper {
     var file = File(filename);
     var src = file.readAsStringSync();
     var data = jsonDecoder.decode(src);
+    //处理Value也是一个json的数据
+    data = processData(data);
+
     var locale = data['@@locale'] ?? data['_locale'];
     if (locale == null) {
       // Get the locale from the end of the file name. This assumes that the file

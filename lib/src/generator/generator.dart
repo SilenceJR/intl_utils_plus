@@ -4,6 +4,7 @@ import '../config/pubspec_config.dart';
 import '../constants/constants.dart';
 import '../utils/file_utils.dart';
 import '../utils/utils.dart';
+import 'data_helper.dart';
 import 'generator_exception.dart';
 import 'intl_translation_helper.dart';
 import 'label.dart';
@@ -109,6 +110,9 @@ class Generator {
 
     var content = mainArbFile.readAsStringSync();
     var decodedContent = json.decode(content) as Map<String, dynamic>;
+
+    //处理Value也是一个json的数据
+    decodedContent = processData(decodedContent);
 
     var labels =
         decodedContent.keys.where((key) => !key.startsWith('@')).map((key) {
